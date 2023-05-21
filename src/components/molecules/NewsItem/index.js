@@ -3,11 +3,11 @@ import React from 'react';
 import {DummyNews1} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-export default function NewsItem() {
+export default function NewsItem({name}) {
   return (
     <View style={styles.container}>
       <View style={styles.titleWrapper}>
-        <Text style={styles.title}>Is it safe to stay at home during coronavirus?</Text>
+        <Text style={styles.title}>{name}</Text>
         <Text style={styles.date}>Today</Text>
       </View>
       <Image source={DummyNews1} style={styles.image} />
@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    paddingBottom:12,
+    paddingBottom: 12,
     paddingTop: 16,
-    paddingHorizontal: 16,
   },
   titleWrapper: {
     flex: 1,

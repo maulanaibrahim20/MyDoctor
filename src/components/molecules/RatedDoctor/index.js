@@ -6,17 +6,19 @@ import {colors, fonts} from '../../../utils';
 export default function RatedDoctor({name, desc, onPress, avatar}) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={avatar} style={styles.avatar} />
-      <View style={styles.profile}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.category}>{desc}</Text>
-      </View>
-      <View style={styles.rate}>
-        <IconStar />
-        <IconStar />
-        <IconStar />
-        <IconStar />
-        <IconStar />
+      <View style={{flexDirection: 'row'}}>
+        <Image source={avatar} style={styles.avatar} />
+        <View style={styles.profile}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.category}>{desc}</Text>
+        </View>
+        <View style={styles.rate}>
+          <IconStar />
+          <IconStar />
+          <IconStar />
+          <IconStar />
+          <IconStar />
+        </View>
       </View>
     </TouchableOpacity>
   );

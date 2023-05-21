@@ -10,7 +10,7 @@ import ChatItem from './ChatItem';
 import InputChat from './InputChat';
 import Profile from './Profile';
 import ProfileItem from './ProfileItem';
-
+import NewsDetail from './NewsDetail';
 
 export {
   Header,
@@ -25,4 +25,5 @@ export {
   InputChat,
   Profile,
   ProfileItem,
+  NewsDetail,
 };

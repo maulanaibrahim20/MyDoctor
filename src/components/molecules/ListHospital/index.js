@@ -1,14 +1,13 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { colors, fonts } from '../../../utils';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {colors, fonts} from '../../../utils';
 
-const ListHospital = ({type, name, address,pic}) => {
+const ListHospital = ({type, name, address, pic}) => {
   return (
     <View style={styles.container}>
       <Image source={pic} style={styles.picture} />
-      <View>
+      <View style={{marginRight: 100}}>
         <Text style={styles.title}>{type}</Text>
-        <Text style={styles.title}>{name}</Text>
         <Text style={styles.address}>{address}</Text>
       </View>
     </View>
@@ -22,20 +21,20 @@ const styles = StyleSheet.create({
     width: 80,
     height: 60,
     marginRight: 16,
-    borderRadius:11,
+    borderRadius: 11,
   },
   container: {
     flexDirection: 'row',
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor :colors.border,
+    borderBottomColor: colors.border,
   },
-  title:{
+  title: {
     fontSize: 16,
     fontFamily: fonts.primary.normal,
     color: colors.text.primary,
   },
-  address:{
+  address: {
     fontSize: 12,
     fontFamily: fonts.primary[300],
     color: colors.text.secondary,

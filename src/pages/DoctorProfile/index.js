@@ -1,27 +1,27 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {
-  Button,
-  Gap,
-  Header,
-  List,
-  Profile,
-  ProfileItem,
-} from '../../components';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {Button, Gap, Header, Profile, ProfileItem} from '../../components';
 import {colors} from '../../utils';
 
-const DoctorProfile = ({navigation}) => {
+const DoctorProfile = ({navigation, route}) => {
+  const detail = route.params.data;
+  // console.log(route.params.data);
   return (
     <View style={styles.page}>
-      <Header title="Doctor Profile" onPress={()=> navigation.goBack()} />
-      <Profile name="Nairobi Putri Hayza" desc="Dokter Anak" />
-      <Gap height={10} />
-      <ProfileItem label="Alumnus" value="Universitas Indonesia, 2020" />
-      <ProfileItem label="Tempat Praktik" value="Rumah Sakit Umum, Bandung" />
-      <ProfileItem label="No. STR" value="0000116622081996" />
-      <View style={styles.action}>
-        <Button title="Start Consultation" onPress={()=> navigation.navigate('Chatting')} />
-      </View>
+      <Header title="Doctor Profile" onPress={() => navigation.goBack()} />
+      <ScrollView>
+        <Profile name={detail.name} desc={detail.spesialis} />
+        <Gap height={10} />
+        <ProfileItem label="Alumnus" value={detail.lulusan} />
+        <ProfileItem label="Tempat Praktik" value={detail.id_hospital} />
+        <ProfileItem label="No. STR" value={detail.no_str} />
+        <View style={styles.action}>
+          <Button
+            title="Start Consultation"
+            onPress={() => navigation.navigate('Chatting')}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
   },
-  action:{
+  action: {
     paddingHorizontal: 40,
     paddingTop: 23,
-  }
+  },
 });

@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import React from 'react';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, Input} from '../../components';
 import {colors, useForm} from '../../utils';
 import axios from 'axios';
-import {Fire} from '../../config';
 
 export default function Register({navigation}) {
   const [form, setForm] = useForm({
@@ -15,18 +14,20 @@ export default function Register({navigation}) {
 
   const onContinue = async () => {
     console.log(form);
-    Fire.auth()
-      .createUserWithEmailAndPassword(form.email, form.password)
-      .then(userCredential => {
-        // Signed in
-        var user = userCredential.user;
-        // ...
+    await axios
+      .post('http://192.168.0.112:8000/api/user', {
+        name: form.fullName,
+        profession: form.profession,
+        email: form.email,
+        password: form.password,
+      })
+      .then(result => {
+        navigation.navigate('MainApp');
       })
       .catch(error => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ..
+        console.log(error);
       });
+
     //navigation.navigate('UploadPhoto');
   };
   return (

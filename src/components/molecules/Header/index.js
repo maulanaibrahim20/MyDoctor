@@ -5,8 +5,8 @@ import {Button, Gap} from '../../atoms';
 import DarkProfile from './DarkProfile';
 
 export default function Header({onPress, title, type}) {
-  if(type === 'dark-profile'){
-    return <DarkProfile onPress={onPress}/>;
+  if (type === 'dark-profile') {
+    return <DarkProfile onPress={onPress} />;
   }
   return (
     <View style={styles.container(type)}>
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     backgroundColor: type === 'dark' ? colors.secondary : colors.white,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomLeftRadius: type === 'dark' ?  20 : 0,
-    borderBottomRightRadius: type === 'dark' ?  20 : 0,
+    borderBottomLeftRadius: type === 'dark' ? 20 : 0,
+    borderBottomRightRadius: type === 'dark' ? 20 : 0,
   }),
   text: type => ({
     textAlign: 'center',

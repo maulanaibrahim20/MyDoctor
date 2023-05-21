@@ -13,28 +13,33 @@ import DummyDoctor11 from './doctor11.png';
 import DummyNews1 from './news1.png';
 import DummyNews2 from './news2.png';
 import DummyNews3 from './news3.png';
+import DummyNews4 from './news4.jpg';
 import DummyHospital1 from './hospital1.png';
 import DummyHospital2 from './hospital2.png';
 import DummyHospital3 from './hospital3.png';
+import DummyHospital4 from './hospital4.jpg';
+import DummyHospital5 from './hospital5.jpg';
 
 export {
-    DummyUser,
-    DummyDoctor1,
-    DummyDoctor2,
-    DummyDoctor3,
-    DummyDoctor4,
-    DummyDoctor5,
-    DummyDoctor6,
-    DummyDoctor7,
-    DummyDoctor8,
-    DummyDoctor9,
-    DummyDoctor10,
-    DummyDoctor11,
-    DummyNews1,
-    DummyNews2,
-    DummyNews3,
-    DummyHospital1,
-    DummyHospital2,
-    DummyHospital3,
-    
-}
+  DummyUser,
+  DummyDoctor1,
+  DummyDoctor2,
+  DummyDoctor3,
+  DummyDoctor4,
+  DummyDoctor5,
+  DummyDoctor6,
+  DummyDoctor7,
+  DummyDoctor8,
+  DummyDoctor9,
+  DummyDoctor10,
+  DummyDoctor11,
+  DummyNews1,
+  DummyNews2,
+  DummyNews3,
+  DummyNews4,
+  DummyHospital1,
+  DummyHospital2,
+  DummyHospital3,
+  DummyHospital4,
+  DummyHospital5,
+};

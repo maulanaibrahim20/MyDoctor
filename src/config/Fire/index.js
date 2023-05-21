@@ -1,14 +1,19 @@
-import firebase from 'firebase';
+import * as firebase from 'firebase';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import 'firebase/compat/database';
+import 'firebase/compat/app-check';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyBpdGo4kaajEpZoGuJyIFmT4sjsAPda74s',
-  authDomain: 'my-doctor-e50c1.firebaseapp.com',
-  projectId: 'my-doctor-e50c1',
-  storageBucket: 'my-doctor-e50c1.appspot.com',
-  messagingSenderId: '360852797294',
-  appId: '1:360852797294:web:14bc1628a8af167ae7737f',
-  measurementId: 'G-99QG5XG4V4',
+  apiKey: 'AIzaSyDtRAy1lEl3reZ1XKZxxd2QjmdamzVhzM8',
+  authDomain: 'my-doctor-b1b1a.firebaseapp.com',
+  projectId: 'my-doctor-b1b1a',
+  storageBucket: 'my-doctor-b1b1a.appspot.com',
+  messagingSenderId: '401904044520',
+  appId: '1:401904044520:web:dcc4927ecd6c7a03ddbc5d',
 });
 
-const Fire = firebase;
+firebase.initializeApp(firebaseConfig);
+
 export default Fire;

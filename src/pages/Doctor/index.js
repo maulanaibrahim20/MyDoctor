@@ -1,12 +1,14 @@
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {
-  FlatList,
+  ActivityIndicator,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {DummyDoctor1, DummyNews1, JSONCategoryDoctor} from '../../assets';
 import {
   DoctorCategory,
   Gap,
@@ -15,50 +17,53 @@ import {
   RatedDoctor,
 } from '../../components';
 import {colors, fonts} from '../../utils';
-import {
-  DummyDoctor1,
-  DummyDoctor2,
-  DummyDoctor3,
-  JSONCategoryDoctor,
-} from '../../assets';
-import axios from 'axios';
 
 export default function Doctor({navigation}) {
-  const [dataUser, setDataUser] = useState(null);
+  const [doctors, setDoctors] = useState(null);
+  const [artikel, setArtikel] = useState(null);
 
   useEffect(() => {
-    getUser();
+    fetchDoctors();
+    fetchArtikel();
   }, []);
 
-  const getUser = async () => {
-    try {
-      await axios({
-        url: 'http://192.168.0.122:8000/api/user',
-        method: 'GET',
+  const fetchDoctors = async () => {
+    await axios
+      .get('http://192.168.43.123:8000/api/doctor', {})
+      .then(result => {
+        setDoctors(result.data.data);
       })
-        .then(response => {
-          setDataUser(response.data.data);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+      .catch(error => {
+        console.log(error);
+      });
   };
+
+  const fetchArtikel = async () => {
+    await axios
+      .get('http://192.168.43.123:8000/api/news', {})
+      .then(result => {
+        setArtikel(result.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   return (
     <View style={styles.page}>
       <View style={styles.content}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.wrapperSection}>
+          <Gap height={30} />
+          <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
+        </View>
+        <ScrollView style={{marginVertical: 10}}>
           <View style={styles.wrapperSection}>
-            <Gap height={30} />
-            <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
             <Text style={styles.welcome}>
               Mau Konsultasi dengan siapa hari ini?
             </Text>
           </View>
           <View style={styles.wrapperScroll}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView horizontal showHorizontalScrollIndicator={false}>
               <View style={styles.category}>
                 <Gap width={32} />
                 {JSONCategoryDoctor.data.map(item => {
@@ -74,32 +79,55 @@ export default function Doctor({navigation}) {
               </View>
             </ScrollView>
           </View>
-          <View style={styles.wrapperSection}>
-            <Text style={styles.sectionLabel}>Top Rated Doctors</Text>
-            <RatedDoctor
-              name="Wahyu Ramadhan"
-              desc="Pediatrcian"
-              avatar={DummyDoctor1}
-              onPress={() => navigation.navigate('DoctorProfile')}
-            />
-            <RatedDoctor
-              name="Sunny Frank"
-              desc="Dentrist"
-              avatar={DummyDoctor2}
-              onPress={() => navigation.navigate('DoctorProfile')}
-            />
-            <RatedDoctor
-              name="Poe Min"
-              desc="Podiatrist"
-              avatar={DummyDoctor3}
-              onPress={() => navigation.navigate('DoctorProfile')}
-            />
+          <View style={[styles.wrapperSection]}>
+            <Text style={[styles.sectionLabel, {marginTop: 30}]}>
+              Top Rated Doctors
+            </Text>
+            {doctors == null ? (
+              <ActivityIndicator />
+            ) : (
+              doctors.map(item => {
+                return (
+                  <RatedDoctor
+                    key={item.id}
+                    name={item.name}
+                    desc={item.spesialis}
+                    avatar={DummyDoctor1}
+                    onPress={() =>
+                      navigation.navigate('DoctorProfile', {
+                        data: item,
+                      })
+                    }
+                  />
+                );
+              })
+            )}
+            <Gap height={20} />
             <Text style={styles.sectionLabel}>Good News</Text>
           </View>
-          <NewsItem />
-          <NewsItem />
-          <NewsItem />
-          <Gap height={30} />
+          <View style={[styles.wrapperSection, {flex: 1}]}>
+            {artikel == null ? (
+              <ActivityIndicator />
+            ) : (
+              artikel.map(item => {
+                return (
+                  <TouchableOpacity
+                    key={item.id}
+                    onPress={() => {
+                      navigation.navigate('NewsDetail', {
+                        data: item,
+                      });
+                    }}>
+                    <NewsItem
+                      name={item.title}
+                      description={item.description}
+                      image={DummyNews1}
+                    />
+                  </TouchableOpacity>
+                );
+              })
+            )}
+          </View>
         </ScrollView>
       </View>
     </View>
@@ -138,7 +166,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.primary[600],
     color: colors.text.primary,
-    marginTop: 30,
+    // marginTop: 20,
     marginBottom: 16,
   },
 });
