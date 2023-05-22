@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  Text,
+} from 'react-native';
 import {DummyDoctor1} from '../../../assets';
 import {Gap, Header, RatedDoctor} from '../../../components';
 import {colors} from '../../../utils';
@@ -34,15 +40,23 @@ const AllDoctor = ({navigation}) => {
         ) : (
           doctor.map(doctor => {
             return (
-              <RatedDoctor
-                key={doctor.id}
-                name={doctor.name}
-                desc={doctor.spesialis}
-                avatar={DummyDoctor1}
-                onPress={() =>
-                  navigation.navigate('DoctorProfile', {data: doctor})
-                }
-              />
+              <View key={doctor.id}>
+                <RatedDoctor
+                  name={doctor.name}
+                  desc={doctor.spesialis}
+                  avatar={DummyDoctor1}
+                  onPress={() =>
+                    navigation.navigate('DoctorProfile', {data: doctor})
+                  }
+                />
+                <View
+                  style={{
+                    borderColor: colors.border,
+                    borderWidth: 1,
+                    marginBottom: 10,
+                  }}
+                />
+              </View>
             );
           })
         )}

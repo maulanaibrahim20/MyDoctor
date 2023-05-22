@@ -130,32 +130,35 @@ export default function Doctor({navigation}) {
               })
             )}
             <Gap height={20} />
-            <Text style={styles.sectionLabel}>Good News</Text>
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-              }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('')}
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.sectionLabel}>Good News</Text>
+              <View
                 style={{
-                  paddingHorizontal: 15,
-                  paddingVertical: 5,
-                  borderRadius: 10,
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
                 }}>
-                <Text
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('AllNews')}
                   style={{
-                    color: colors.black,
-                    fontSize: 13,
-                    fontFamily: fonts.primary[600],
-                    color: colors.text.secondary,
+                    paddingHorizontal: 15,
+                    // paddingVertical: 5,
+                    borderRadius: 10,
                   }}>
-                  All News
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      color: colors.black,
+                      fontSize: 13,
+                      fontFamily: fonts.primary[600],
+                      color: colors.text.secondary,
+                    }}>
+                    All News
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
+          <Gap height={10} />
           <View style={[styles.wrapperSection, {flex: 1}]}>
             {artikel == null ? (
               <ActivityIndicator />

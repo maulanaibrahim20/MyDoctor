@@ -17,6 +17,7 @@ import {
   // AllDoctor,
 } from '../pages';
 import AllDoctor from '../pages/DoctorProfile/AllDoctor';
+import AllNews from '../components/molecules/NewsItem/AllNews';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigator, NewsDetail} from '../components';
 
@@ -111,6 +112,11 @@ const Router = () => {
       <Stack.Screen
         name="AllDoctor"
         component={AllDoctor}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AllNews"
+        component={AllNews}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
