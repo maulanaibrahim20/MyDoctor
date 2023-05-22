@@ -11,21 +11,21 @@ import Chatting from './Chatting';
 import UserProfile from './UserProfile';
 import UpdateProfile from './UpdateProfile';
 import DoctorProfile from './DoctorProfile';
+import AllDoctor from './DoctorProfile/AllDoctor';
 
 export {
-    Splash,
-    GetStarted,
-    Register,
-    Login,
-    UploadPhoto,
-    Doctor,
-    Messages,
-    Hospitals,
-    ChooseDoctor,
-    Chatting,
-    UserProfile,
-    UpdateProfile,
-    DoctorProfile,
-    
-
+  Splash,
+  GetStarted,
+  Register,
+  Login,
+  UploadPhoto,
+  Doctor,
+  Messages,
+  Hospitals,
+  ChooseDoctor,
+  Chatting,
+  UserProfile,
+  UpdateProfile,
+  DoctorProfile,
+  AllDoctor,
 };

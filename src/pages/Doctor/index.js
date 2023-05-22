@@ -80,9 +80,36 @@ export default function Doctor({navigation}) {
             </ScrollView>
           </View>
           <View style={[styles.wrapperSection]}>
-            <Text style={[styles.sectionLabel, {marginTop: 30}]}>
-              Top Rated Doctors
-            </Text>
+            <View
+              style={{flexDirection: 'row', marginTop: 30, marginBottom: 25}}>
+              <View style={{flex: 1, justifyContent: 'center'}}>
+                <Text style={[styles.sectionLabel]}>Top Rated Doctors</Text>
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'flex-end',
+                  justifyContent: 'center',
+                }}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('AllDoctor')}
+                  style={{
+                    paddingHorizontal: 15,
+                    paddingVertical: 5,
+                    borderRadius: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: colors.black,
+                      fontSize: 13,
+                      fontFamily: fonts.primary[600],
+                      color: colors.text.secondary,
+                    }}>
+                    All Doctor
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
             {doctors == null ? (
               <ActivityIndicator />
             ) : (
@@ -104,6 +131,30 @@ export default function Doctor({navigation}) {
             )}
             <Gap height={20} />
             <Text style={styles.sectionLabel}>Good News</Text>
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+              }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('')}
+                style={{
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                  borderRadius: 10,
+                }}>
+                <Text
+                  style={{
+                    color: colors.black,
+                    fontSize: 13,
+                    fontFamily: fonts.primary[600],
+                    color: colors.text.secondary,
+                  }}>
+                  All News
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={[styles.wrapperSection, {flex: 1}]}>
             {artikel == null ? (
@@ -166,7 +217,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.primary[600],
     color: colors.text.primary,
-    // marginTop: 20,
-    marginBottom: 16,
   },
 });
