@@ -3,12 +3,45 @@ import React from 'react';
 import {ILLogo} from '../../assets';
 import {Button, Gap, Input, Link} from '../../components';
 import {colors, fonts, useForm} from '../../utils';
+import {storeData} from '../../redux/store';
+import axios from 'axios';
+import {Fire} from '../../config';
 
 export default function Login({navigation}) {
   const [form, setForm] = useForm({email: '', password: ''});
 
-  const login = () => {
-    console.log('form: ', form);
+  const login = async () => {
+    try {
+      const {data} = await axios.post('http://192.168.43.123:8000/api/auth', {
+        email: form.email,
+        password: form.password,
+      });
+
+      const dataUser = {
+        id: data.data.id,
+        name: data.data.name,
+      };
+
+      // Fire.auth()
+      //   .signInWithEmailAndPassword(data.data.email, form.password)
+      //   .then(response => {
+      //     Fire.database()
+      //       .ref(`users/${response.user.uid}/`)
+      //       .once('value')
+      //       .then(responseDatabase => {
+      //         if (responseDatabase.val()) {
+      //           storeData('user', responseDatabase.val());
+      //         }
+      //       });
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
+
+      navigation.navigate('MainApp');
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <View style={styles.page}>

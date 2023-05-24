@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, Input, Loading} from '../../components';
 import {colors, useForm} from '../../utils';
 import axios from 'axios';
+import {Fire} from '../../config';
 
 export default function Register({navigation}) {
   const [form, setForm] = useForm({
@@ -23,9 +24,30 @@ export default function Register({navigation}) {
         password: form.password,
       })
       .then(result => {
-        navigation.navigate('UploadPhoto', {
-          data: form,
-        });
+        Fire.auth()
+          .createUserWithEmailAndPassword(form.email, form.password)
+          .then(success => {
+            const data = {
+              fullName: form.fullName,
+              profession: form.profession,
+              email: form.email,
+              password: form.password,
+            };
+
+            Fire.database()
+              .ref('users/' + success.user.uid + '/')
+              .set(data);
+
+            navigation.navigate('UploadPhoto', {
+              data: data,
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        // navigation.navigate('UploadPhoto', {
+        //   data: form,
+        // });
       })
       .catch(error => {
         console.log(error);
