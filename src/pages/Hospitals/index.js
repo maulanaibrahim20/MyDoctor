@@ -24,6 +24,7 @@ export default function Hospitals() {
   const fetchHospitals = async () => {
     await axios({
       url: 'http://192.168.43.123:8000/api/hospital',
+      // url: 'http://10.0.167.39:8000/api/hospital',
       method: 'GET',
     })
       .then(response => {
@@ -37,6 +38,7 @@ export default function Hospitals() {
   const fetchCounts = async () => {
     await axios({
       url: 'http://192.168.43.123:8000/api/counting',
+      // url: 'http://10.0.167.39:8000/api/counting',
       method: 'GET',
     })
       .then(response => {

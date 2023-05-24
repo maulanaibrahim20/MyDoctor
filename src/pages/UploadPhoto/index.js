@@ -4,7 +4,9 @@ import {Button, Gap, Header, Link} from '../../components';
 import {ILNullPhoto, IconAddPhoto} from '../../assets';
 import {colors, fonts} from '../../utils';
 
-export default function UploadPhoto({navigation}) {
+export default function UploadPhoto({navigation, route}) {
+  const detail = route.params.data;
+
   return (
     <View style={styles.page}>
       <Header title="Upload Photo" />
@@ -15,8 +17,8 @@ export default function UploadPhoto({navigation}) {
             <IconAddPhoto style={styles.addPhoto} />
           </View>
           <Gap height={26} />
-          <Text style={styles.name}>Andi Nuraziddin</Text>
-          <Text style={styles.proffession}>Software Developer</Text>
+          <Text style={styles.name}>{detail.fullName}</Text>
+          <Text style={styles.proffession}>{detail.profession}</Text>
         </View>
         <View>
           <Button

@@ -30,6 +30,7 @@ export default function Doctor({navigation}) {
   const fetchDoctors = async () => {
     await axios
       .get('http://192.168.43.123:8000/api/doctor', {})
+      // .get('http://10.0.167.39:8000/api/doctor', {})
       .then(result => {
         setDoctors(result.data.data);
       })
@@ -41,6 +42,7 @@ export default function Doctor({navigation}) {
   const fetchArtikel = async () => {
     await axios
       .get('http://192.168.43.123:8000/api/news', {})
+      // .get('http://10.0.167.39:8000/api/news', {})
       .then(result => {
         setArtikel(result.data.data);
       })
