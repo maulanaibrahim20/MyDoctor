@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import {DummyDoctor1} from '../../../assets';
-import {Gap, Header, RatedDoctor} from '../../../components';
+import {Gap, Header, Loading, RatedDoctor} from '../../../components';
 import {colors} from '../../../utils';
 import axios from 'axios';
 
@@ -15,7 +15,9 @@ const AllDoctor = ({navigation}) => {
   const [doctor, setdoctor] = useState(null);
 
   useEffect(() => {
-    fetchDoctor();
+    setInterval(() => {
+      fetchDoctor();
+    }, 3000);
   }, []);
 
   const fetchDoctor = async () => {
@@ -36,7 +38,7 @@ const AllDoctor = ({navigation}) => {
       <Gap height={10} />
       <ScrollView style={styles.content}>
         {doctor == null ? (
-          <ActivityIndicator />
+          <Loading />
         ) : (
           doctor.map(doctor => {
             return (

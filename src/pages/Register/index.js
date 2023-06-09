@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button, Gap, Header, Input, Loading} from '../../components';
 import {colors, useForm} from '../../utils';
 import axios from 'axios';
 import {Fire} from '../../config';
+import {showMessage} from 'react-native-flash-message';
 
 export default function Register({navigation}) {
   const [form, setForm] = useForm({
@@ -15,6 +16,7 @@ export default function Register({navigation}) {
 
   const onContinue = async () => {
     console.log(form);
+
     await axios
       // .post('http://10.0.167.39:8000/api/user', {
       .post('http://192.168.43.123:8000/api/user', {
@@ -33,26 +35,24 @@ export default function Register({navigation}) {
               email: form.email,
               password: form.password,
             };
-
             Fire.database()
               .ref('users/' + success.user.uid + '/')
               .set(data);
-
-            navigation.navigate('UploadPhoto', {
-              data: data,
-            });
+            navigation.navigate('Login');
           })
           .catch(error => {
-            console.log(error);
+            // console.log(error);
+            showMessage({
+              message: error,
+              type: 'default',
+              backgroundColor: colors.error,
+              color: colors.white,
+            });
           });
-        // navigation.navigate('UploadPhoto', {
-        //   data: form,
-        // });
-      })
-      .catch(error => {
-        console.log(error);
       });
-    //navigation.navigate('UploadPhoto');
+    // .catch(error => {
+    //   console.log(error);
+    // });
   };
   return (
     <View style={styles.page}>

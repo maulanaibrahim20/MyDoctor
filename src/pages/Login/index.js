@@ -1,46 +1,98 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {ILLogo} from '../../assets';
-import {Button, Gap, Input, Link} from '../../components';
+import {Button, Gap, Input, Link, Loading} from '../../components';
 import {colors, fonts, useForm} from '../../utils';
-import {storeData} from '../../redux/store';
+import {storeData} from '../../utils/localStorage';
 import axios from 'axios';
 import {Fire} from '../../config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
-  const [form, setForm] = useForm({email: '', password: ''});
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
+
+  const handleInputChange = value => {
+    setForm({...form, email: value});
+    if (value === '') {
+      setError('Email Tidak Boleh Kosong');
+    } else {
+      setError('');
+    }
+  };
+
+  const handleInputPassword = value => {
+    setForm({...form, password: value});
+    if (value === '') {
+      setErrorPassword('Password Tidak Boleh Kosong');
+    } else {
+      setErrorPassword('');
+    }
+  };
 
   const login = async () => {
+    if (form.email.trim() === '' && form.password.trim() === '') {
+      setError('Email Tidak Boleh Kosong');
+      setErrorPassword('Password Tidak Boleh Kosong');
+      return;
+    } else {
+      if (form.email.trim() === '') {
+        setError('Email Tidak Boleh Kosong');
+        return;
+      } else if (form.password.trim() === '') {
+        setErrorPassword('Password Tidak Boleh Kosong');
+        return;
+      }
+    }
+
+    setError('');
+    setErrorPassword('');
+
     try {
       const {data} = await axios.post('http://192.168.43.123:8000/api/auth', {
         email: form.email,
         password: form.password,
       });
-
-      const dataUser = {
+      const datauser = {
         id: data.data.id,
         name: data.data.name,
+        profession: data.data.profession,
       };
-
-      // Fire.auth()
-      //   .signInWithEmailAndPassword(data.data.email, form.password)
-      //   .then(response => {
-      //     Fire.database()
-      //       .ref(`users/${response.user.uid}/`)
-      //       .once('value')
-      //       .then(responseDatabase => {
-      //         if (responseDatabase.val()) {
-      //           storeData('user', responseDatabase.val());
-      //         }
-      //       });
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //   });
-
-      navigation.navigate('MainApp');
+      Fire.auth()
+        .signInWithEmailAndPassword(data.data.email, form.password)
+        .then(response => {
+          Fire.database()
+            .ref(`users/${response.user.uid}`)
+            .once('value')
+            .then(resfirebase => {
+              if (resfirebase.val()) {
+                storeData('user', resfirebase.val());
+              }
+            });
+          setForm('reset');
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      storeData('userdata', datauser);
+      storeData('loggin', 'true');
+      navigation.replace('MainApp');
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    }
+    try {
+      const {data} = await axios.post('http://192.168.43.123:8000/api/auth', {
+        email: form.email,
+        password: form.password,
+      });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
     }
   };
   return (
@@ -50,15 +102,39 @@ export default function Login({navigation}) {
       <Input
         label="Email Address"
         value={form.email}
-        onChangeText={value => setForm('email', value)}
+        onChangeText={handleInputChange}
       />
+      {error != '' && (
+        <View style={{marginHorizontal: 10, marginBottom: 5}}>
+          <Text
+            style={{
+              color: 'red',
+              fontSize: 12,
+              fontWeight: 'bold',
+            }}>
+            * {error}
+          </Text>
+        </View>
+      )}
       <Gap height={24} />
       <Input
         label="Password"
         value={form.password}
-        onChangeText={value => setForm('password', value)}
         secureTextEntry
+        onChangeText={handleInputPassword}
       />
+      {errorPassword != '' && (
+        <View style={{marginHorizontal: 10, marginBottom: 5}}>
+          <Text
+            style={{
+              color: 'red',
+              fontSize: 12,
+              fontWeight: 'bold',
+            }}>
+            * {errorPassword}
+          </Text>
+        </View>
+      )}
       <Gap height={10} />
       <Link title="Forgot My Password" size={12} />
       <Gap height={40} />

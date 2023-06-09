@@ -17,15 +17,31 @@ import {
   RatedDoctor,
 } from '../../components';
 import {colors, fonts} from '../../utils';
+import {getData} from '../../utils/localStorage';
+import store from '../../redux/store';
 
 export default function Doctor({navigation}) {
   const [doctors, setDoctors] = useState(null);
   const [artikel, setArtikel] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [user, setuser] = useState({});
 
   useEffect(() => {
-    fetchDoctors();
-    fetchArtikel();
-  }, []);
+    const debouncetimeout = setTimeout(() => {
+      getdatauser();
+      fetchDoctors();
+      fetchArtikel();
+      fetchProfile();
+    }, 300);
+
+    return () => clearTimeout(debouncetimeout);
+  }, [user.name, user.profession]);
+
+  const getdatauser = () => {
+    getData('userdata').then(response => {
+      setuser(response);
+    });
+  };
 
   const fetchDoctors = async () => {
     await axios
@@ -51,12 +67,27 @@ export default function Doctor({navigation}) {
       });
   };
 
+  const fetchProfile = async () => {
+    await axios
+      .get('http://192.168.43.123:8000', {})
+      .then(result => {
+        setProfile(result.data.data);
+      })
+      .catch(err => {
+        console.log(error);
+      });
+  };
+
   return (
     <View style={styles.page}>
       <View style={styles.content}>
         <View style={styles.wrapperSection}>
           <Gap height={30} />
-          <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
+          <HomeProfile
+            nama={user.name}
+            profesi={user.profession}
+            onPress={() => navigation.navigate('UserProfile')}
+          />
         </View>
         <ScrollView style={{marginVertical: 10}}>
           <View style={styles.wrapperSection}>

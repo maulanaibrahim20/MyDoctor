@@ -1,40 +1,40 @@
-import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { DummyUser } from '../../../assets'
-import { colors, fonts } from '../../../utils'
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import React from 'react';
+import {DummyUser} from '../../../assets';
+import {colors, fonts} from '../../../utils';
 
-const HomeProfile = ({onPress}) => {
+const HomeProfile = ({onPress, nama, profesi}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={DummyUser} style={styles.avatar} />  
+      <Image source={DummyUser} style={styles.avatar} />
       <View>
-      <Text style={styles.name}>Maulana Ibrahim</Text>
-      <Text style={styles.proffession}>Product Designer</Text>
+        <Text style={styles.name}>{nama}</Text>
+        <Text style={styles.proffession}>{profesi}</Text>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default HomeProfile
+export default HomeProfile;
 
 const styles = StyleSheet.create({
-  container : {
+  container: {
     flexDirection: 'row',
-  },  
-  avatar : {
+  },
+  avatar: {
     width: 46,
     height: 46,
-    borderRadius:46 / 2,
-    marginRight:12,
+    borderRadius: 46 / 2,
+    marginRight: 12,
   },
-  name:{
+  name: {
     fontSize: 16,
     fontFamily: fonts.primary[600],
-    color : colors.text.primary,
+    color: colors.text.primary,
   },
-  proffession :{
+  proffession: {
     fontSize: 12,
     fontFamily: fonts.primary[400],
     color: colors.text.secondary,
   },
-})
+});

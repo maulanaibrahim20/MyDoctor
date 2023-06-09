@@ -2,8 +2,21 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Gap, Header, List, Profile} from '../../components';
 import {colors} from '../../utils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UserProfile = ({navigation}) => {
+  const logout = () => {
+    try {
+      AsyncStorage.removeItem('userdata');
+      AsyncStorage.removeItem('user');
+      AsyncStorage.removeItem('loggin');
+
+      navigation.replace('GetStarted');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.page}>
       <Header title="Profile" onPress={() => navigation.goBack()} />
@@ -30,10 +43,12 @@ const UserProfile = ({navigation}) => {
         icon="rate"
       />
       <List
-        name="Help Center"
-        desc="Last Update Yesterday"
+        onPress={() => {
+          logout();
+        }}
+        name="Logout"
         type="next"
-        icon="help"
+        icon="logout"
       />
     </View>
   );

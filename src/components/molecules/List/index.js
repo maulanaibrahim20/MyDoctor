@@ -5,26 +5,30 @@ import {
   IconEditProfile,
   IconHelp,
   IconLanguage,
+  IconLogout,
   IconNext,
   IconRate,
 } from '../../../assets';
 
 const List = ({profile, name, desc, type, onPress, icon}) => {
   const Icon = () => {
-   if(icon === 'edit-profile'){
-    return <IconEditProfile/>
-   } 
-   if(icon === 'language'){
-    return <IconLanguage/>
-   }
-   if(icon === 'rate'){
-    return <IconRate/>
-   }
-   if(icon === 'help'){
-    return <IconHelp/>
-   }
-   return <IconEditProfile/>
-  }
+    if (icon === 'edit-profile') {
+      return <IconEditProfile />;
+    }
+    if (icon === 'language') {
+      return <IconLanguage />;
+    }
+    if (icon === 'rate') {
+      return <IconRate />;
+    }
+    if (icon === 'help') {
+      return <IconHelp />;
+    }
+    if (icon === 'logout') {
+      return <IconLogout />;
+    }
+    return <IconEditProfile />;
+  };
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       {icon ? <Icon /> : <Image source={profile} style={styles.avatar} />}

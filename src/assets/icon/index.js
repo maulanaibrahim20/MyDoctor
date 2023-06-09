@@ -16,26 +16,26 @@ import IconEditProfile from './ic-edit-profile.svg';
 import IconLanguage from './ic-language.svg';
 import IconRate from './ic-rate.svg';
 import IconHelp from './ic-help.svg';
+import IconLogout from './ic-logout.svg';
 
 export {
-    IconBackDark,
-    IconBackLight,
-    IconAddPhoto,
-    IconRemovePhoto,
-    IconDoctor,
-    IconDoctorActive,
-    IconMessages,
-    IconMessagesActive,
-    IconHospitals,
-    IconHospitalsActive,
-    IconStar,
-    IconNext,
-    IconSendLight,
-    IconSendDark,
-    IconEditProfile,
-    IconLanguage,
-    IconRate,
-    IconHelp,
-    
-
+  IconBackDark,
+  IconBackLight,
+  IconAddPhoto,
+  IconRemovePhoto,
+  IconDoctor,
+  IconDoctorActive,
+  IconMessages,
+  IconMessagesActive,
+  IconHospitals,
+  IconHospitalsActive,
+  IconStar,
+  IconNext,
+  IconSendLight,
+  IconSendDark,
+  IconEditProfile,
+  IconLanguage,
+  IconRate,
+  IconHelp,
+  IconLogout,
 };

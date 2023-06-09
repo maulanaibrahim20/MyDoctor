@@ -1,14 +1,26 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ILLogo} from '../../assets';
-import { colors, fonts } from '../../utils';
+import {colors, fonts} from '../../utils';
+import {getData} from '../../utils/localStorage';
 
 export default function Splash({navigation}) {
   useEffect(() => {
-    setTimeout(() =>{
-      navigation.replace('GetStarted')
-    }, 3000)
-  },[])
+    setTimeout(() => {
+      getData('userdata')
+        .then(response => {
+          if (response == undefined) {
+            navigation.replace('GetStarted');
+          } else {
+            navigation.replace('MainApp');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, 3000);
+  });
+
   return (
     <View style={styles.page}>
       <ILLogo />
