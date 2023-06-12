@@ -3,10 +3,10 @@ import React from 'react';
 import {DummyUser} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-const HomeProfile = ({onPress, nama, profesi}) => {
+const HomeProfile = ({onPress, nama, profesi, avatar}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={DummyUser} style={styles.avatar} />
+      <Image source={avatar} style={styles.avatar} />
       <View>
         <Text style={styles.name}>{nama}</Text>
         <Text style={styles.proffession}>{profesi}</Text>

@@ -3,14 +3,14 @@ import React from 'react';
 import {DummyNews1} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-export default function NewsItem({name}) {
+export default function NewsItem({name, avatar, tanggal}) {
   return (
     <View style={styles.container}>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.date}>Today</Text>
+        <Text style={styles.date}>{tanggal}</Text>
       </View>
-      <Image source={DummyNews1} style={styles.image} />
+      <Image source={{uri: avatar}} style={styles.image} />
     </View>
   );
 }

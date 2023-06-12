@@ -15,10 +15,11 @@ const AllDoctor = ({navigation}) => {
   const [doctor, setdoctor] = useState(null);
 
   useEffect(() => {
-    setInterval(() => {
+    const debouncetimeout = setTimeout(() => {
       fetchDoctor();
-    }, 3000);
-  }, []);
+    }, 300);
+    return () => clearTimeout(debouncetimeout);
+  });
 
   const fetchDoctor = async () => {
     await axios
@@ -26,6 +27,7 @@ const AllDoctor = ({navigation}) => {
       .then(result => {
         // console.log(result.data.data);
         setdoctor(result.data.data);
+        // console.log(result.data.data);
       })
       .catch(error => {
         console.log(error);
@@ -38,15 +40,16 @@ const AllDoctor = ({navigation}) => {
       <Gap height={10} />
       <ScrollView style={styles.content}>
         {doctor == null ? (
-          <Loading />
+          <ActivityIndicator />
         ) : (
           doctor.map(doctor => {
             return (
               <View key={doctor.id}>
                 <RatedDoctor
                   name={doctor.name}
-                  desc={doctor.spesialis}
-                  avatar={DummyDoctor1}
+                  desc={doctor.id_spesialis}
+                  avatar={`http://192.168.43.123:8000/images_doctor/${doctor.image}`}
+                  // avatar={DummyDoctor1}
                   onPress={() =>
                     navigation.navigate('DoctorProfile', {data: doctor})
                   }

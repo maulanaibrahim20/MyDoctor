@@ -1,42 +1,99 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {Header, List} from '../../components';
-import {DummyDoctor1} from '../../assets';
+import {DummyDoctor1, baseUrl} from '../../assets';
 import {colors} from '../../utils';
+import axios from 'axios';
 
-const ChooseDoctor = ({navigation}) => {
+const ChooseDoctor = ({navigation, route}) => {
+  const [spesialis, setSpesialis] = useState(null);
+
+  useEffect(() => {
+    const fetchSpesialis = async () => {
+      try {
+        const response = await axios.get(`${baseUrl.url}doctor`, {
+          params: {id_spesialis: route.params.data.id},
+        });
+        setSpesialis(response.data.data);
+        // console.log(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const debouncetimeout = setTimeout(() => {
+      fetchSpesialis();
+    }, 300);
+
+    return () => clearTimeout(debouncetimeout);
+  }, [route.params.data.id]);
+
+  // const fetchSpesialis = async () => {
+  //   await axios
+  //     .get(`${baseUrl.url}doctor`, {
+  //       id_spesialis: route.params.data.id,
+  //       params: {per_page: 100},
+  //     })
+  //     .then(result => {
+  //       setSpesialis(result.data.data);
+  //       console.log(result.data.data);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // };
+
+  // const spesialis = route.params.data.doctor;
   return (
     <View style={styles.page}>
-      <Header
-        type="dark"
-        title="Pilih Dokter Anak"
-        onPress={() => navigation.goBack()}
-      />
-      <List
-        type="next"
-        profile={DummyDoctor1}
-        name="Alexander Janie"
-        desc="Wanita"
-        onPress={() => navigation.navigate('Chatting')}
-      />
-      <List
-        type="next"
-        profile={DummyDoctor1}
-        name="Alexander Janie"
-        desc="Wanita"
-      />
-      <List
-        type="next"
-        profile={DummyDoctor1}
-        name="Alexander Janie"
-        desc="Wanita"
-      />
-      <List
-        type="next"
-        profile={DummyDoctor1}
-        name="Alexander Janie"
-        desc="Wanita"
-      />
+      {spesialis == null ? (
+        <ActivityIndicator size={'large'} />
+      ) : (
+        <View>
+          {spesialis.length > 0 ? (
+            <Header
+              type="dark"
+              title={'Pilih Dokter ' + spesialis[0].id_spesialis}
+              onPress={() => navigation.goBack()}
+            />
+          ) : (
+            <Header
+              type="dark"
+              title="Data Tidak Ada Silahkan Kembali"
+              onPress={() => navigation.goBack()}
+            />
+          )}
+        </View>
+      )}
+      {spesialis == null ? (
+        <ActivityIndicator size={'large'} />
+      ) : (
+        <View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.ada}>
+              {spesialis.map(item => {
+                console.log(item);
+                return (
+                  <List
+                    key={item.id}
+                    type="next"
+                    profile={DummyDoctor1}
+                    name={item.name}
+                    desc={item.jenis_kelamin}
+                    onPress={() => navigation.navigate('Chatting')}
+                  />
+                );
+              })}
+            </View>
+          </ScrollView>
+        </View>
+      )}
     </View>
   );
 };

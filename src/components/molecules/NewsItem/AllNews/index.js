@@ -27,12 +27,26 @@ export default function NewsAll({navigation}) {
       .then(result => {
         // console.log(result.data.data);
         setnews(result.data.data);
+        console.log(result.data.data);
       })
       .catch(error => {
         console.error(error);
       });
   };
+  const formatDate = created_at => {
+    const date = new Date(created_at);
 
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return date.toLocaleDateString('id-ID', options);
+  };
+
+  const created_at = '2023-06-12T09:15:30Z';
+  const formattedDate = formatDate(created_at);
   return (
     <View style={styles.page}>
       <Header title="All News" onPress={() => navigation.goBack()} />
@@ -50,7 +64,11 @@ export default function NewsAll({navigation}) {
                     data: news,
                   });
                 }}>
-                <NewsItem name={news.title} image={DummyNews4} />
+                <NewsItem
+                  name={news.title}
+                  avatar={`http://192.168.43.123:8000/images_news/${news.image}`}
+                  tanggal={formattedDate}
+                />
               </TouchableOpacity>
             );
           })

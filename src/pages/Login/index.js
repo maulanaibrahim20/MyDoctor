@@ -2,11 +2,10 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {ILLogo} from '../../assets';
 import {Button, Gap, Input, Link, Loading} from '../../components';
-import {colors, fonts, useForm} from '../../utils';
+import {colors, fonts, showError, showSuccess, useForm} from '../../utils';
 import {storeData} from '../../utils/localStorage';
 import axios from 'axios';
 import {Fire} from '../../config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
   const [form, setForm] = useState({
@@ -16,6 +15,13 @@ export default function Login({navigation}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
+
+  const resetForm = () => {
+    setForm({
+      email: '',
+      password: '',
+    });
+  };
 
   const handleInputChange = value => {
     setForm({...form, email: value});
@@ -77,22 +83,27 @@ export default function Login({navigation}) {
           setForm('reset');
         })
         .catch(error => {
-          console.error(error);
+          showError('gagal');
+          // console.error(error);
         });
       storeData('userdata', datauser);
       storeData('loggin', 'true');
       navigation.replace('MainApp');
+      resetForm();
+      showSuccess('Good Job, Login Success');
     } catch (error) {
-      console.error(error);
+      showError('Email atau Password anda Salah atau Tidak Terdaftar');
+      // console.error(error);
     }
     try {
       const {data} = await axios.post('http://192.168.43.123:8000/api/auth', {
         email: form.email,
         password: form.password,
       });
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.error(error);
+      // showError('gagal');
+      // console.error(error);
     }
   };
   return (

@@ -8,7 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {DummyDoctor1, DummyNews1, JSONCategoryDoctor} from '../../assets';
+import {
+  DummyDoctor1,
+  DummyNews1,
+  DummyUser,
+  JSONCategoryDoctor,
+  baseUrl,
+} from '../../assets';
 import {
   DoctorCategory,
   Gap,
@@ -23,6 +29,7 @@ import store from '../../redux/store';
 export default function Doctor({navigation}) {
   const [doctors, setDoctors] = useState(null);
   const [artikel, setArtikel] = useState(null);
+  const [spesialis, setSpesialis] = useState(null);
   const [profile, setProfile] = useState(null);
   const [user, setuser] = useState({});
 
@@ -32,6 +39,7 @@ export default function Doctor({navigation}) {
       fetchDoctors();
       fetchArtikel();
       fetchProfile();
+      fetchSpesialis();
     }, 300);
 
     return () => clearTimeout(debouncetimeout);
@@ -45,9 +53,14 @@ export default function Doctor({navigation}) {
 
   const fetchDoctors = async () => {
     await axios
-      .get('http://192.168.43.123:8000/api/doctor', {})
+      .get(`${baseUrl.url}doctor`, {
+        params: {
+          per_page: 3,
+        },
+      })
       // .get('http://10.0.167.39:8000/api/doctor', {})
       .then(result => {
+        console.log(result.data.meta);
         setDoctors(result.data.data);
       })
       .catch(error => {
@@ -56,11 +69,24 @@ export default function Doctor({navigation}) {
   };
 
   const fetchArtikel = async () => {
+    console.log(baseUrl);
     await axios
-      .get('http://192.168.43.123:8000/api/news', {})
+      .get(`${baseUrl.url}news`, {})
       // .get('http://10.0.167.39:8000/api/news', {})
       .then(result => {
         setArtikel(result.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const fetchSpesialis = async () => {
+    await axios
+      .get(`${baseUrl.url}spesialis`, {})
+      // .get('http://192.168.43.123:8000/api/spesialis', {})
+      .then(result => {
+        setSpesialis(result.data.data);
       })
       .catch(error => {
         console.log(error);
@@ -78,6 +104,21 @@ export default function Doctor({navigation}) {
       });
   };
 
+  const formatDate = created_at => {
+    const date = new Date(created_at);
+
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return date.toLocaleDateString('id-ID', options);
+  };
+
+  const created_at = '2023-06-12T09:15:30Z';
+  const formattedDate = formatDate(created_at);
+
   return (
     <View style={styles.page}>
       <View style={styles.content}>
@@ -86,7 +127,12 @@ export default function Doctor({navigation}) {
           <HomeProfile
             nama={user.name}
             profesi={user.profession}
-            onPress={() => navigation.navigate('UserProfile')}
+            avatar={DummyUser}
+            onPress={() =>
+              navigation.navigate('UserProfile', {
+                data: user,
+              })
+            }
           />
         </View>
         <ScrollView style={{marginVertical: 10}}>
@@ -95,23 +141,29 @@ export default function Doctor({navigation}) {
               Mau Konsultasi dengan siapa hari ini?
             </Text>
           </View>
-          <View style={styles.wrapperScroll}>
-            <ScrollView horizontal showHorizontalScrollIndicator={false}>
-              <View style={styles.category}>
-                <Gap width={32} />
-                {JSONCategoryDoctor.data.map(item => {
-                  return (
-                    <DoctorCategory
-                      key={item.id}
-                      category={item.category}
-                      onPress={() => navigation.navigate('ChooseDoctor')}
-                    />
-                  );
-                })}
-                <Gap width={22} />
-              </View>
-            </ScrollView>
-          </View>
+          {spesialis == null ? (
+            <ActivityIndicator size={'large'} />
+          ) : (
+            <View style={styles.wrapperScroll}>
+              <ScrollView horizontal showHorizontalScrollIndicator={false}>
+                <View style={styles.category}>
+                  <Gap width={32} />
+                  {spesialis.map(item => {
+                    return (
+                      <DoctorCategory
+                        key={item.id}
+                        category={item.spesialis}
+                        onPress={() =>
+                          navigation.navigate('ChooseDoctor', {data: item})
+                        }
+                      />
+                    );
+                  })}
+                  <Gap width={22} />
+                </View>
+              </ScrollView>
+            </View>
+          )}
           <View style={[styles.wrapperSection]}>
             <View
               style={{flexDirection: 'row', marginTop: 30, marginBottom: 25}}>
@@ -151,8 +203,8 @@ export default function Doctor({navigation}) {
                   <RatedDoctor
                     key={item.id}
                     name={item.name}
-                    desc={item.spesialis}
-                    avatar={DummyDoctor1}
+                    desc={item.id_spesialis}
+                    avatar={`http://192.168.43.123:8000/images_doctor/${item.image}`}
                     onPress={() =>
                       navigation.navigate('DoctorProfile', {
                         data: item,
@@ -208,7 +260,8 @@ export default function Doctor({navigation}) {
                     <NewsItem
                       name={item.title}
                       description={item.description}
-                      image={DummyNews1}
+                      tanggal={formattedDate}
+                      avatar={`http://192.168.43.123:8000/images_news/${item.image}`}
                     />
                   </TouchableOpacity>
                 );

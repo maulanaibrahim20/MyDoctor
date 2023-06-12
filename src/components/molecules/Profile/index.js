@@ -3,11 +3,12 @@ import React from 'react';
 import {DummyUser, IconRemovePhoto} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-const Profile = ({name, desc, isRemove}) => {
+const Profile = ({name, desc, isRemove, avatar}) => {
+  // console.log(avatar);
   return (
     <View style={styles.container}>
       <View style={styles.bordeProfile}>
-        <Image source={DummyUser} style={styles.avatar} />
+        <Image source={{uri: avatar}} style={styles.avatar} />
         {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
       </View>
       {name && (

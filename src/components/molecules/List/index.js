@@ -11,6 +11,7 @@ import {
 } from '../../../assets';
 
 const List = ({profile, name, desc, type, onPress, icon}) => {
+  // console.log(name);
   const Icon = () => {
     if (icon === 'edit-profile') {
       return <IconEditProfile />;

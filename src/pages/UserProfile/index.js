@@ -3,8 +3,9 @@ import React from 'react';
 import {Gap, Header, List, Profile} from '../../components';
 import {colors} from '../../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {DummyUser} from '../../assets';
 
-const UserProfile = ({navigation}) => {
+const UserProfile = ({navigation, route}) => {
   const logout = () => {
     try {
       AsyncStorage.removeItem('userdata');
@@ -16,12 +17,13 @@ const UserProfile = ({navigation}) => {
       console.log(error);
     }
   };
+  const detail = route.params.data;
 
   return (
     <View style={styles.page}>
       <Header title="Profile" onPress={() => navigation.goBack()} />
       <Gap height={10} />
-      <Profile name="Maulana Ibrahim" desc="Product Designer" />
+      <Profile name={detail.name} desc={detail.profession} image={DummyUser} />
       <Gap height={14} />
       <List
         name="Edit Profile"

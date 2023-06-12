@@ -2,10 +2,10 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {colors, fonts} from '../../../utils';
 
-const ListHospital = ({type, name, address, pic}) => {
+const ListHospital = ({type, name, address, avatar}) => {
   return (
     <View style={styles.container}>
-      <Image source={pic} style={styles.picture} />
+      <Image source={{uri: avatar}} style={styles.picture} />
       <View style={{marginRight: 100}}>
         <Text style={styles.title}>{type}</Text>
         <Text style={styles.address}>{address}</Text>

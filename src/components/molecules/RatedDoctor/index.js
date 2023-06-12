@@ -7,7 +7,7 @@ export default function RatedDoctor({name, desc, onPress, avatar}) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={{flexDirection: 'row'}}>
-        <Image source={avatar} style={styles.avatar} />
+        <Image source={{uri: avatar}} style={styles.avatar} />
         <View style={styles.profile}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.category}>{desc}</Text>

@@ -8,7 +8,12 @@ import {
   Text,
   View,
 } from 'react-native';
-import {DummyHospital1, DummyHospital4, DummyHospital5} from '../../assets';
+import {
+  DummyHospital1,
+  DummyHospital4,
+  DummyHospital5,
+  baseUrl,
+} from '../../assets';
 import {ListHospital} from '../../components';
 import {colors, fonts} from '../../utils';
 
@@ -22,33 +27,43 @@ export default function Hospitals() {
   }, []);
 
   const fetchHospitals = async () => {
-    await axios({
-      url: 'http://192.168.43.123:8000/api/hospital',
-      // url: 'http://10.0.167.39:8000/api/hospital',
-      method: 'GET',
-    })
-      .then(response => {
-        setHospitals(response.data.data);
+    await axios
+      .get(`${baseUrl.url}hospital`, {})
+      // .get('http://10.0.167.39:8000/api/doctor', {})
+      .then(result => {
+        setHospitals(result.data.data);
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       });
   };
 
   const fetchCounts = async () => {
-    await axios({
-      url: 'http://192.168.43.123:8000/api/counting',
-      // url: 'http://10.0.167.39:8000/api/counting',
-      method: 'GET',
-    })
-      .then(response => {
-        console.log(response.data.jumlah_data[0].hospital);
-        setCounts(response.data.jumlah_data[0].hospital);
+    await axios
+      .get(`${baseUrl.url}counting`, {})
+      // .get('http://10.0.167.39:8000/api/doctor', {})
+      .then(result => {
+        setCounts(result.data.jumlah_data[0].hospital);
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       });
   };
+
+  // const fetchCounts = async () => {
+  //   await axios({
+  //     url: 'http://192.168.43.123:8000/api/counting',
+  //     // url: 'http://10.0.167.39:8000/api/counting',
+  //     method: 'GET',
+  //   })
+  //     .then(response => {
+  //       console.log(response.data.jumlah_data[0].hospital);
+  //       setCounts(response.data.jumlah_data[0].hospital);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+  // };
 
   return (
     <View style={styles.page}>
@@ -67,7 +82,7 @@ export default function Hospitals() {
                   key={item.id}
                   type={item.name}
                   address={item.address}
-                  pic={DummyHospital1}
+                  avatar={`http://192.168.43.123:8000/images_hospital/${item.image}`}
                 />
               );
             })
