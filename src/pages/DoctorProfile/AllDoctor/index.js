@@ -74,10 +74,11 @@ const styles = StyleSheet.create({
   page: {
     backgroundColor: colors.white,
     flex: 1,
+    marginLeft: 3,
   },
   content: {
     backgroundColor: colors.white,
-    borderRadius: 20,
+    // borderRadius: 20,
     // flex: 1,
     marginTop: -30,
     paddingTop: 14,

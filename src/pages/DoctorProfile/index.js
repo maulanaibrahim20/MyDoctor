@@ -15,7 +15,14 @@ const DoctorProfile = ({navigation, route}) => {
         <Profile
           name={detail.name}
           desc={detail.id_spesialis}
-          avatar={`http://192.168.43.123:8000/images_doctor/${detail.image}`}
+          avatar={
+            detail.image
+              ? {
+                  uri: `http://192.168.43.123:8000/images_doctor/${detail.image}`,
+                }
+              : undefined
+          }
+          // avatar={`http://192.168.43.123:8000/images_doctor/${detail.image}`}
         />
         <Gap height={10} />
         <ProfileItem label="Alumnus" value={detail.lulusan} />
@@ -24,7 +31,7 @@ const DoctorProfile = ({navigation, route}) => {
         <View style={styles.action}>
           <Button
             title="Start Consultation"
-            onPress={() => navigation.navigate('Chatting')}
+            onPress={() => navigation.navigate('Chatting', {data: detail})}
           />
         </View>
       </ScrollView>

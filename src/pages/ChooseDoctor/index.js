@@ -21,7 +21,7 @@ const ChooseDoctor = ({navigation, route}) => {
           params: {id_spesialis: route.params.data.id},
         });
         setSpesialis(response.data.data);
-        // console.log(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.error(error);
       }
@@ -34,26 +34,10 @@ const ChooseDoctor = ({navigation, route}) => {
     return () => clearTimeout(debouncetimeout);
   }, [route.params.data.id]);
 
-  // const fetchSpesialis = async () => {
-  //   await axios
-  //     .get(`${baseUrl.url}doctor`, {
-  //       id_spesialis: route.params.data.id,
-  //       params: {per_page: 100},
-  //     })
-  //     .then(result => {
-  //       setSpesialis(result.data.data);
-  //       console.log(result.data.data);
-  //     })
-  //     .catch(error => {
-  //       console.error(error);
-  //     });
-  // };
-
-  // const spesialis = route.params.data.doctor;
   return (
     <View style={styles.page}>
       {spesialis == null ? (
-        <ActivityIndicator size={'large'} />
+        <ActivityIndicator />
       ) : (
         <View>
           {spesialis.length > 0 ? (
@@ -72,21 +56,28 @@ const ChooseDoctor = ({navigation, route}) => {
         </View>
       )}
       {spesialis == null ? (
-        <ActivityIndicator size={'large'} />
+        <ActivityIndicator />
       ) : (
         <View>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.ada}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.listContainer}>
               {spesialis.map(item => {
                 console.log(item);
                 return (
                   <List
                     key={item.id}
                     type="next"
-                    profile={DummyDoctor1}
+                    profile={{
+                      uri: `http://192.168.43.123:8000/images_doctor/${item.image}`,
+                    }}
                     name={item.name}
                     desc={item.jenis_kelamin}
-                    onPress={() => navigation.navigate('Chatting')}
+                    onPress={() =>
+                      navigation.navigate('DoctorProfile', {
+                        data: item,
+                      })
+                    }
+                    style={styles.listItem}
                   />
                 );
               })}
@@ -104,5 +95,11 @@ const styles = StyleSheet.create({
   page: {
     backgroundColor: colors.white,
     flex: 1,
+  },
+  listContainer: {
+    flexDirection: 'column',
+  },
+  listItem: {
+    marginRight: 16,
   },
 });

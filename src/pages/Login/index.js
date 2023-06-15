@@ -6,6 +6,7 @@ import {colors, fonts, showError, showSuccess, useForm} from '../../utils';
 import {storeData} from '../../utils/localStorage';
 import axios from 'axios';
 import {Fire} from '../../config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({navigation}) {
   const [form, setForm] = useState({
@@ -72,6 +73,7 @@ export default function Login({navigation}) {
       Fire.auth()
         .signInWithEmailAndPassword(data.data.email, form.password)
         .then(response => {
+          AsyncStorage.setItem('uuidUser', response.user.uid);
           Fire.database()
             .ref(`users/${response.user.uid}`)
             .once('value')

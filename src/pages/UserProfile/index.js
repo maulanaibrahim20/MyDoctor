@@ -23,7 +23,7 @@ const UserProfile = ({navigation, route}) => {
     <View style={styles.page}>
       <Header title="Profile" onPress={() => navigation.goBack()} />
       <Gap height={10} />
-      <Profile name={detail.name} desc={detail.profession} image={DummyUser} />
+      <Profile name={detail.name} desc={detail.profession} avatar={DummyUser} />
       <Gap height={14} />
       <List
         name="Edit Profile"
@@ -49,6 +49,7 @@ const UserProfile = ({navigation, route}) => {
           logout();
         }}
         name="Logout"
+        desc="Keluar"
         type="next"
         icon="logout"
       />

@@ -8,7 +8,11 @@ const Profile = ({name, desc, isRemove, avatar}) => {
   return (
     <View style={styles.container}>
       <View style={styles.bordeProfile}>
-        <Image source={{uri: avatar}} style={styles.avatar} />
+        {avatar && avatar.uri ? (
+          <Image source={{uri: avatar.uri}} style={styles.avatar} />
+        ) : (
+          <Image source={avatar} style={styles.avatar} />
+        )}
         {isRemove && <IconRemovePhoto style={styles.removePhoto} />}
       </View>
       {name && (

@@ -3,17 +3,15 @@ import React from 'react';
 import {colors, fonts} from '../../../utils';
 import {DummyDoctor9} from '../../../assets';
 
-const Other = () => {
+const Other = ({text, date, avatar}) => {
   return (
     <View style={styles.container}>
-      <Image source={DummyDoctor9} style={styles.avatar} />
+      <Image source={{uri: avatar}} style={styles.avatar} />
       <View>
         <View style={styles.chatContent}>
-          <Text style={styles.text}>
-            Ibu Dokter, Apakah memakan jeruk tiap hari itu buruk?
-          </Text>
+          <Text style={styles.text}>{text}</Text>
         </View>
-        <Text style={styles.date}>4.20 AM</Text>
+        <Text style={styles.date}>{date}</Text>
       </View>
     </View>
   );
